@@ -27,7 +27,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   /* Keymap _BL: Base Layer (Default Layer)
    */
 [_BL] = LAYOUT(
-  QK_GESC,  KC_F1,    KC_F2,    KC_F3,    KC_F4,    KC_F5,    KC_F6,    KC_F7,    KC_F8,    KC_F9,    KC_F10,   KC_F11,   KC_F12,   KC_PSCR,  KC_DEL,   KC_INS,   KC_PGUP,  KC_PGDN,
+  QK_GESC,  KC_F1,    KC_F2,    KC_F3,    KC_F4,    KC_F5,    KC_F6,    KC_F7,    KC_F8,    KC_F9,    KC_F10,   KC_F11,   KC_F12,   KC_PSCR,  KC_PAUS,  KC_INS,   KC_SCRL,  KC_DEL,
   KC_GRV,   KC_1,     KC_2,     KC_3,     KC_4,     KC_5,     KC_6,     KC_7,     KC_8,     KC_9,     KC_0,     KC_MINS,  KC_EQL,   KC_BSPC,  KC_NUM,   KC_PSLS,  KC_PAST,  KC_PMNS,
   KC_TAB,   KC_Q,     KC_W,     KC_E,     KC_R,     KC_T,     KC_Y,     KC_U,     KC_I,     KC_O,     KC_P,     KC_LBRC,  KC_RBRC,  KC_BSLS,  KC_P7,    KC_P8,    KC_P9,    KC_PPLS,
   KC_CAPS,  KC_A,     KC_S,     KC_D,     KC_F,     KC_G,     KC_H,     KC_J,     KC_K,     KC_L,     KC_SCLN,  KC_QUOT,            KC_ENT,   KC_P4,    KC_P5,    KC_P6,
@@ -41,29 +41,25 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   _______,  _______,  _______,  _______,  _______,  _______,  _______,  _______,  _______,  _______,  _______,  _______,  _______,   EE_CLR,   _______,  _______,  _______,  _______,
   _______,  _______,  _______,  _______,  _______,  _______,  _______,  _______,  _______,  _______,  _______,  _______,  _______,   QK_BOOT,  _______,  _______,  _______,  _______,
   _______,  _______,  _______,  _______,  _______,  _______,  _______,  _______,  _______,  _______,  _______,  _______,             QK_RBT,   _______,  _______,  _______,
-  _______,  RGB_HUI,  RGB_HUD,  RGB_SPD,  RGB_SPI,  _______,  _______,  _______,  _______,  _______,  _______,  _______,  RGB_VAI,   _______,  _______,  _______,  _______,
-  _______,  UC_WIN,   _______,                      _______,                                _______,  _______,  _______,  RGB_RMOD,  RGB_VAD,  RGB_MOD,  _______,  _______)
+  _______,  RGB_HUI,  RGB_HUD,  RGB_SPD,  RGB_SPI,  _______,  NK_TOGG,  _______,  _______,  _______,  _______,  _______,  RGB_VAI,   _______,  _______,  _______,  _______,
+  _______,  GU_TOGG,  _______,                      _______,                                _______,  _______,  _______,  RGB_RMOD,  RGB_VAD,  RGB_MOD,  _______,  _______)
 };
 
 bool rgb_matrix_indicators_advanced_user(uint8_t led_min, uint8_t led_max) {
-    if (host_keyboard_led_state().caps_lock) 
-    {
-        RGB_MATRIX_INDICATOR_SET_COLOR(54, 255, 0, 0);
-        for (int i = 99; i <= led_max; ++i) 
-        {
-            RGB_MATRIX_INDICATOR_SET_COLOR(i, 255, 0, 0);
+    if (host_keyboard_led_state().caps_lock) {
+        rgb_matrix_set_color(54, RGB_RED);
+        for (int i = 99; i <= 118; ++i) {
+            rgb_matrix_set_color(i, RGB_RED);
         }
     }
-
-    if (!host_keyboard_led_state().num_lock) 
-    {
-        RGB_MATRIX_INDICATOR_SET_COLOR(32, 0, 0, 0);
+    if (!host_keyboard_led_state().num_lock) {
+        rgb_matrix_set_color(32, RGB_OFF);
     }
-
-    if (host_keyboard_led_state().scroll_lock) 
-    {
-        RGB_MATRIX_INDICATOR_SET_COLOR(16, 255, 0, 0); // assumes Page Up is bound to ScrLK
+    if (host_keyboard_led_state().scroll_lock) {
+        rgb_matrix_set_color(16, RGB_RED); // assumes Page Up is bound to ScrLK
     }
-
+    if (keymap_config.no_gui) {
+        rgb_matrix_set_color(88, RGB_OFF); // turns off KC_LGUI
+    }
     return true;
 }
