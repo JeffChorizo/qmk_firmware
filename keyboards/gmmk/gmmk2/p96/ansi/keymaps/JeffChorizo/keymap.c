@@ -44,3 +44,26 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   _______,  RGB_HUI,  RGB_HUD,  RGB_SPD,  RGB_SPI,  _______,  _______,  _______,  _______,  _______,  _______,  _______,  RGB_VAI,   _______,  _______,  _______,  _______,
   _______,  UC_WIN,   _______,                      _______,                                _______,  _______,  _______,  RGB_RMOD,  RGB_VAD,  RGB_MOD,  _______,  _______)
 };
+
+bool rgb_matrix_indicators_advanced_user(uint8_t led_min, uint8_t led_max) {
+    if (host_keyboard_led_state().caps_lock) 
+    {
+        RGB_MATRIX_INDICATOR_SET_COLOR(54, 255, 0, 0);
+        for (int i = 99; i <= led_max; ++i) 
+        {
+            RGB_MATRIX_INDICATOR_SET_COLOR(i, 255, 0, 0);
+        }
+    }
+
+    if (!host_keyboard_led_state().num_lock) 
+    {
+        RGB_MATRIX_INDICATOR_SET_COLOR(32, 0, 0, 0);
+    }
+
+    if (host_keyboard_led_state().scroll_lock) 
+    {
+        RGB_MATRIX_INDICATOR_SET_COLOR(16, 255, 0, 0); // assumes Page Up is bound to ScrLK
+    }
+
+    return true;
+}
