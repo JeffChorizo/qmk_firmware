@@ -16,27 +16,4 @@
 
 #pragma once
 
-/* External spi flash */
-#define EXTERNAL_FLASH_SPI_SLAVE_SELECT_PIN B14
-
-/* SPI Config for LED Driver */
-#define SPI_DRIVER SPIDQ
-#define SPI_SCK_PIN A5
-#define SPI_MOSI_PIN A7
-#define SPI_MISO_PIN A6
-
-#define AW20216S_CS_PIN_1 A15
-#define AW20216S_CS_PIN_2 B15
-#define AW20216S_EN_PIN C13
-
-#define LAYER_STATE_8BIT
-
-#define DEBOUNCE 5
-#define MATRIX_IO_DELAY 5
-
-#define NO_ACTION_TAPPING
-#define NO_ACTION_ONESHOT
-
-#define FORCE_NKRO
-
-#define USB_POLLING_INTERVAL_MS 1
+#define DYNAMIC_KEYMAP_LAYER_COUNT 2
