@@ -45,11 +45,19 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   _______,  GU_TOGG,  _______,                      _______,                                _______,  _______,  _______,  RGB_RMOD,  RGB_VAD,  RGB_MOD,  _______,  _______)
 };
 
+static uint16_t current_count = 0;
+const uint16_t k_blink_blink_time = 200;
+const uint16_t k_blink_mod_threshold = k_blink_blink_time * 2;
+
 bool rgb_matrix_indicators_advanced_user(uint8_t led_min, uint8_t led_max) {
     if (host_keyboard_led_state().caps_lock) {
         rgb_matrix_set_color(54, RGB_RED);
+
+        current_count += 1;
+        const bool should_blink = current_count % k_blink_mod_threshold > k_blink_blink_time;
+        const uint8_t red_value = should_blink ? 0x00 : 0xFF;
         for (int i = 99; i <= 118; ++i) {
-            rgb_matrix_set_color(i, RGB_RED);
+            rgb_matrix_set_color(i, red_value, 0x00, 0x00);
         }
     }
     if (!host_keyboard_led_state().num_lock) {
